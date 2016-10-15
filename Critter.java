@@ -48,8 +48,18 @@ public abstract class Critter {
 	
 	private int x_coord;
 	private int y_coord;
+	private boolean moved = false;
 	
 	protected final void walk(int direction) {
+		this.energy -= Params.walk_energy_cost;
+		if(moved){			
+			//already moved, take penalty and return	
+			return;
+		}
+		//take out energy
+		//set flag to true so it cant move twice
+		moved = true;
+		this.energy -= Params.walk_energy_cost;
 		//walk 1 tile in the specified direction
 		if(direction == 0) {
 			//right
@@ -65,7 +75,7 @@ public abstract class Critter {
 			if(this.x_coord > Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
-			if(this.y_coord < Params.world_height) {
+			if(this.y_coord < 0) {
 				this.y_coord += Params.world_height;
 			}
 		}
@@ -80,17 +90,17 @@ public abstract class Critter {
 			//up-left
 			this.x_coord -= 1;
 			this.y_coord -= 1;
-			if(this.x_coord < Params.world_width) {
+			if(this.x_coord < 0) {
 				this.x_coord += Params.world_width;
 			}
-			if(this.y_coord < Params.world_height) {
+			if(this.y_coord < 0) {
 				this.y_coord += Params.world_height;
 			}
 		}
 		if(direction == 4) {
 			//left
 			this.x_coord -= 1; 
-			if(this.x_coord < Params.world_width) {
+			if(this.x_coord < 0) {
 				this.x_coord += Params.world_width;
 			}
 		}
@@ -98,7 +108,7 @@ public abstract class Critter {
 			//down-left
 			this.x_coord -= 1; 
 			this.y_coord += 1;
-			if(this.x_coord < Params.world_width) {
+			if(this.x_coord < 0) {
 				this.x_coord += Params.world_width;
 			}
 			if(this.y_coord > Params.world_height) {
@@ -128,6 +138,12 @@ public abstract class Critter {
 	protected final void run(int direction) {
 		//run 2 tiles, straight lines only
 		//if they go past the board limits, set them to other side of board
+		this.energy -= Params.run_energy_cost;
+		if(moved) {
+			return;
+		}
+		moved = true;
+		this.energy -= Params.run_energy_cost;
 		if(direction == 0) {
 			//right
 			this.x_coord += 1;
@@ -159,7 +175,25 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
-		
+		//make sure it has enough energy
+		if(this.energy < Params.min_reproduce_energy)
+			return;
+		int childEnergy = this.energy / 2;
+		if(this.energy % 2 == 0) {
+			this.energy = childEnergy;
+			offspring.energy = childEnergy;
+		}
+		else{
+			//if energy is odd need to round up parents new energy
+			this.energy = childEnergy+1;
+			offspring.energy = childEnergy;
+		}
+		offspring.x_coord = this.x_coord;
+		offspring.y_coord = this.y_coord;
+		//moving to right square, adding energy back because not actually walking
+		offspring.walk(direction);
+		offspring.energy += Params.walk_energy_cost;
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -176,6 +210,19 @@ public abstract class Critter {
 	 * @throws InvalidCritterException
 	 */
 	public static void makeCritter(String critter_class_name) throws InvalidCritterException {
+		try {
+			Class<?> cl = Class.forName("assignment4."+critter_class_name);
+			Object crt = cl.newInstance();
+			Critter crit = (Critter) crt;
+			crit.energy = Params.start_energy;
+			crit.x_coord = getRandomInt(Params.world_width-1);
+			crit.y_coord = getRandomInt(Params.world_height-1);
+			population.add(crit);
+		}
+		catch(Exception e) {
+			throw new InvalidCritterException(critter_class_name);
+		}
+		
 	}
 	
 	/**
@@ -270,10 +317,56 @@ public abstract class Critter {
 	 * Clear the world of all critters, dead and alive
 	 */
 	public static void clearWorld() {
+		//clear board
+		for(Critter crit: population) {
+			population.remove(crit);
+		}
+		for(Critter crit: babies) {
+			babies.remove(crit);
+		}
 	}
 	
 	public static void worldTimeStep() {
 	}
 	
-	public static void displayWorld() {}
+	public static void displayWorld() {
+		String board[][] = new String[Params.world_width][Params.world_height];
+		//corners should be +'s
+		board[0][0] = "+";
+		board[0][Params.world_height-1] = "+";
+		board[Params.world_width-1][0] = "+";
+		board[Params.world_width-1][Params.world_height-1] = "+";
+		//making border of board
+		for(int i = 1; i < Params.world_width-1; i++) {
+			board[i][0] = "-";
+		}
+		for(int i = 1; i < Params.world_width-1; i++) {
+			board[i][Params.world_height-1] = "-";
+		}
+		for(int i = 1; i < Params.world_height-1; i++) {
+			board[0][i] = "|";
+		}
+		for(int i = 1; i < Params.world_height-1; i++) {
+			board[Params.world_width-1][i] = "|";
+		}
+		for(Critter crit: population) {
+			board[crit.x_coord][crit.y_coord] = crit.toString();
+			//reset moved flags for next turn
+			crit.moved = false;
+		}
+		for(int i = 0; i < Params.world_height; i++) {
+			for(int j = 0; j < Params.world_width; j++) {
+				//traverse horizontal across rows printing out board
+				if(board[j][i] == null) {
+					System.out.print(" ");
+				}
+				else{
+					System.out.print(board[j][i]);
+				}
+			}
+			//go to next row
+			System.out.println();			
+		}
+			
+	}
 }

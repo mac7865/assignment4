@@ -123,7 +123,7 @@ public abstract class Critter {
 			}
 		}
 		if(direction == 7) {
-			//donw-right
+			//down-right
 			this.x_coord += 1;
 			this.y_coord += 1;
 			if(this.x_coord > Params.world_width) {
@@ -327,6 +327,18 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		//do every critter's time step move
+		for(Critter crit: population) {
+			crit.doTimeStep();
+		}
+				
+		//apply rest cost and remove dead Critters, reset move flags
+		for(Critter crit: population) {
+			crit.moved = false;
+			crit.energy -= Params.rest_energy_cost;
+			if(crit.energy <= 0)
+				population.remove(crit);
+		}
 	}
 	
 	public static void displayWorld() {
@@ -351,8 +363,6 @@ public abstract class Critter {
 		}
 		for(Critter crit: population) {
 			board[crit.x_coord][crit.y_coord] = crit.toString();
-			//reset moved flags for next turn
-			crit.moved = false;
 		}
 		for(int i = 0; i < Params.world_height; i++) {
 			for(int j = 0; j < Params.world_width; j++) {

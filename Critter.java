@@ -50,13 +50,116 @@ public abstract class Critter {
 	private int y_coord;
 	
 	protected final void walk(int direction) {
+		//walk 1 tile in the specified direction
+		if(direction == 0) {
+			//right
+			this.x_coord += 1;
+			if(this.x_coord > Params.world_width) {
+				this.x_coord -= Params.world_width;
+			}
+		}
+		if(direction == 1) {
+			//up-right
+			this.x_coord += 1;
+			this.y_coord -= 1;
+			if(this.x_coord > Params.world_width) {
+				this.x_coord -= Params.world_width;
+			}
+			if(this.y_coord < Params.world_height) {
+				this.y_coord += Params.world_height;
+			}
+		}
+		if(direction == 2) {
+			//up
+			this.y_coord -= 1; 
+			if(this.y_coord < Params.world_height) {
+				this.y_coord += Params.world_height;
+			}
+		}
+		if(direction == 3) {
+			//up-left
+			this.x_coord -= 1;
+			this.y_coord -= 1;
+			if(this.x_coord < Params.world_width) {
+				this.x_coord += Params.world_width;
+			}
+			if(this.y_coord < Params.world_height) {
+				this.y_coord += Params.world_height;
+			}
+		}
+		if(direction == 4) {
+			//left
+			this.x_coord -= 1; 
+			if(this.x_coord < Params.world_width) {
+				this.x_coord += Params.world_width;
+			}
+		}
+		if(direction == 5) {
+			//down-left
+			this.x_coord -= 1; 
+			this.y_coord += 1;
+			if(this.x_coord < Params.world_width) {
+				this.x_coord += Params.world_width;
+			}
+			if(this.y_coord > Params.world_height) {
+				this.y_coord -= Params.world_height;
+			}
+		}
+		if(direction == 6) {
+			//down
+			this.y_coord += 1;
+			if(this.y_coord > Params.world_height) {
+				this.y_coord -= Params.world_height;
+			}
+		}
+		if(direction == 7) {
+			//donw-right
+			this.x_coord += 1;
+			this.y_coord += 1;
+			if(this.x_coord > Params.world_width) {
+				this.x_coord -= Params.world_width;
+			}
+			if(this.y_coord > Params.world_height) {
+				this.y_coord -= Params.world_height;
+			}
+		}
 	}
 	
 	protected final void run(int direction) {
-		
+		//run 2 tiles, straight lines only
+		//if they go past the board limits, set them to other side of board
+		if(direction == 0) {
+			//right
+			this.x_coord += 1;
+			if(this.x_coord > Params.world_width) {
+				this.x_coord -= Params.world_width;
+			}
+		}
+		if(direction == 2) {
+			//up
+			this.y_coord -= 2; 
+			if(this.y_coord < Params.world_height) {
+				this.y_coord += Params.world_height;
+			}
+		}
+		if(direction == 4) {
+			//left
+			this.x_coord -= 2; 
+			if(this.x_coord < Params.world_width) {
+				this.x_coord += Params.world_width;
+			}
+		}
+		if(direction == 6) {
+			//down
+			this.y_coord += 2;
+			if(this.y_coord > Params.world_height) {
+				this.y_coord -= Params.world_height;
+			}
+		}
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		
 	}
 
 	public abstract void doTimeStep();

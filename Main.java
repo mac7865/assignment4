@@ -70,6 +70,15 @@ public class Main {
         /* Write your code below. */
         
         System.out.println("GLHF");
+        JunitTestMyCritterSample1 test = new JunitTestMyCritterSample1();
+        try {
+        	Critter.displayWorld();
+			test.testWalk();
+			test.testWalkTwiceInOneTurn();
+		} catch (InvalidCritterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
         /* Write your code above */
         System.out.flush();

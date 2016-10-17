@@ -65,7 +65,7 @@ public class Main {
         } else { // if no arguments to main
             kb = new Scanner(System.in); // use keyboard and console
         }
-
+        
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
@@ -79,6 +79,96 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        
+        while(true) {
+        	System.out.print("What is your command? : ");
+        	String fullCommand = kb.nextLine();
+        	String[] command = fullCommand.split("\\s+");
+        	boolean invalid = false;
+        	if(command[0].equals(""))
+        		invalid = true;
+        	else {
+	        	if (command[0].equals("quit")) {
+	        		if(command.length == 1)
+	        			break;
+	        		else
+	        			invalid = true;
+	        	}
+	        	else if (command[0].equals("show")) {
+	        		if(command.length == 1)
+	        			Critter.displayWorld();
+	        		else
+	        			invalid = true;
+	        	}
+	        	else if(command[0].equals("step")) {
+	        		if(command.length > 2) //invalid step command
+	        			invalid = true;
+	        		else{
+	        			try{
+	        				if(command.length > 1) {
+			        			int steps = Integer.parseInt(command[1]);
+				        		for(int i = 0; i < steps; i++){
+				        			Critter.worldTimeStep();
+				        		}
+			        		}
+	        				else
+			        			Critter.worldTimeStep();
+		        		}
+	        			catch(Exception e) {
+	        				System.out.println("error processing: " + fullCommand);
+	        			}
+	        		}
+	        	}
+	        	else if(command[0].equals("seed")) {
+	        		if(command.length != 2) {
+	        			invalid = true;
+	        		}
+	        		else {
+	        			try{
+	        				long seed = Long.parseLong(command[1]);
+	        				Critter.setSeed(seed);
+	        			}
+	        			catch(Exception e) {
+	        				System.out.println("error processing: " + fullCommand);
+	        			}
+	        		}
+	        	}        	
+	        	else if(command[0].equals("make")) {
+	        		int count = 1;
+	        		if(command.length > 3 || command.length == 1)
+	        			invalid = true;
+	        		else{
+		        		if(command.length > 2) {
+		        			count = Integer.parseInt(command[2]);
+		        		}
+		        		for(int x = 0; x < count; x++) {
+		        			try {
+		        				Critter.makeCritter(command[1]);;
+		        			}
+		        			catch(Exception e) {
+		        				System.out.println("error processing: " + fullCommand);
+		        				break;
+		        			}
+		        		}
+	        		}
+	        	}
+	        	else if(command[0].equals("stats")) {
+	        		if(command.length != 2)
+	        			invalid = true;
+	        		else {
+	        			try{
+	        				Critter.runStats(Critter.getInstances(command[1]));
+	        			}
+	        			catch(Exception e) {
+	        				System.out.println("error processing: " + fullCommand);
+	        			}
+	        		}
+	        	}
+        	}
+        	if(invalid) {
+        		System.out.println("invalid command: " + fullCommand);
+        	}
+        }
         
         /* Write your code above */
         System.out.flush();

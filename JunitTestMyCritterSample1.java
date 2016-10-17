@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import assignment4.Critter.TestCritter;
 import java.awt.Point;
+
 public class JunitTestMyCritterSample1 {
 
 	private static final boolean DEBUG = false;

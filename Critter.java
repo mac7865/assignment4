@@ -322,7 +322,18 @@ public abstract class Critter {
 	 */
 	public static List<Critter> getInstances(String critter_class_name) throws InvalidCritterException {
 		List<Critter> result = new java.util.ArrayList<Critter>();
-	
+		try{
+			Class<?> cls = Class.forName("assignment4."+critter_class_name);
+			for(Critter crit: population) {
+				if(cls.isInstance(crit)) {
+					result.add(crit);
+				}
+			}
+		}
+		catch(Exception e){
+			return null;
+		}
+		
 		return result;
 	}
 	
@@ -420,37 +431,38 @@ public abstract class Critter {
 		for(Critter crit: population) {
 			crit.doTimeStep();
 		}
-		//sort world by x-coord
-		if(population.get(0).x_coord > population.get(1).x_coord) {
-			Critter temp = population.get(0);
-			population.set(0, population.get(1));
-			population.set(1, temp);
-		}
-		for(int i = 0; i < population.size(); i++) {
-			for(int j = 0; j < population.size(); j++) {
-				if(population.get(i).x_coord > population.get(j).x_coord) {
-					Critter temp = population.get(i);
-					population.set(i, population.get(j));
-					population.set(j, temp);
+		//sort world by x-coord if necessary
+		if(population.size() > 1){
+			if(population.get(0).x_coord > population.get(1).x_coord) {
+				Critter temp = population.get(0);
+				population.set(0, population.get(1));
+				population.set(1, temp);
+			}
+			for(int i = 0; i < population.size(); i++) {
+				for(int j = 0; j < population.size(); j++) {
+					if(population.get(i).x_coord > population.get(j).x_coord) {
+						Critter temp = population.get(i);
+						population.set(i, population.get(j));
+						population.set(j, temp);
+					}
 				}
 			}
-		}
-		//sort world by y-coord
-		if(population.get(0).y_coord > population.get(1).y_coord) {
-			Critter temp = population.get(0);
-			population.set(0, population.get(1));
-			population.set(1, temp);
-		}
-		for(int i = 0; i < population.size(); i++) {
-			for(int j = 0; j < population.size(); j++) {
-				if(population.get(i).y_coord > population.get(j).y_coord) {
-					Critter temp = population.get(i);
-					population.set(i, population.get(j));
-					population.set(j, temp);
+			//sort world by y-coord
+			if(population.get(0).y_coord > population.get(1).y_coord) {
+				Critter temp = population.get(0);
+				population.set(0, population.get(1));
+				population.set(1, temp);
+			}
+			for(int i = 0; i < population.size(); i++) {
+				for(int j = 0; j < population.size(); j++) {
+					if(population.get(i).y_coord > population.get(j).y_coord) {
+						Critter temp = population.get(i);
+						population.set(i, population.get(j));
+						population.set(j, temp);
+					}
 				}
 			}
-		}
-				
+		}	
 		//now that world is sorted, ready to settle conflicts
 		fightStage = true;
 		for(int x = 0; x < population.size()-1; x++) {
@@ -505,7 +517,8 @@ public abstract class Critter {
 		
 		fightStage = false;
 		//apply rest cost and remove dead Critters, reset move flags, add babies to population
-		for(Critter crit: population) {
+		for(int i = 0; i < population.size(); i++) {
+			Critter crit = population.get(i);
 			crit.moved = false;
 			crit.energy -= Params.rest_energy_cost;
 			if(crit.energy <= 0)
@@ -518,30 +531,31 @@ public abstract class Critter {
 	}
 	
 	public static void displayWorld() {
-		String board[][] = new String[Params.world_width][Params.world_height];
+		String board[][] = new String[Params.world_width+2][Params.world_height+2];
 		//corners should be +'s
 		board[0][0] = "+";
-		board[0][Params.world_height-1] = "+";
-		board[Params.world_width-1][0] = "+";
-		board[Params.world_width-1][Params.world_height-1] = "+";
+		board[0][Params.world_height+1] = "+";
+		board[Params.world_width+1][0] = "+";
+		board[Params.world_width+1][Params.world_height+1] = "+";
 		//making border of board
-		for(int i = 1; i < Params.world_width-1; i++) {
+		for(int i = 1; i < Params.world_width+1; i++) {
 			board[i][0] = "-";
 		}
-		for(int i = 1; i < Params.world_width-1; i++) {
-			board[i][Params.world_height-1] = "-";
+		for(int i = 1; i < Params.world_width+1; i++) {
+			board[i][Params.world_height+1] = "-";
 		}
-		for(int i = 1; i < Params.world_height-1; i++) {
+		for(int i = 1; i < Params.world_height+1; i++) {
 			board[0][i] = "|";
 		}
-		for(int i = 1; i < Params.world_height-1; i++) {
-			board[Params.world_width-1][i] = "|";
+		for(int i = 1; i < Params.world_height+1; i++) {
+			board[Params.world_width+1][i] = "|";
 		}
 		for(Critter crit: population) {
-			board[crit.x_coord][crit.y_coord] = crit.toString();
+			//need to adjust for world border
+			board[crit.x_coord+1][crit.y_coord+1] = crit.toString();
 		}
-		for(int i = 0; i < Params.world_height; i++) {
-			for(int j = 0; j < Params.world_width; j++) {
+		for(int i = 0; i < board[0].length; i++) {
+			for(int j = 0; j < board.length; j++) {
 				//traverse horizontal across rows printing out board
 				if(board[j][i] == null) {
 					System.out.print(" ");

@@ -529,6 +529,15 @@ public abstract class Critter {
 			population.add(baby);
 			baby.moved = false;
 		}
+		//refresh algae
+		for(int i = 0; i < Params.refresh_algae_count; i++) {
+			try {
+				makeCritter("Algae");
+			}
+			catch(Exception e) {
+				System.out.println("error refreshing algae");
+			}
+		}
 	}
 	
 	public static void displayWorld() {

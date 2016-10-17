@@ -428,10 +428,12 @@ public abstract class Critter {
 	}
 	
 	public static void worldTimeStep() {
+		System.out.println("world step - begin");
 		//do every critter's time step move
 		for(Critter crit: population) {
 			crit.doTimeStep();
 		}
+		System.out.println("world step - stepped");
 		//sort world by x-coord if necessary
 		if(population.size() > 1){
 			if(population.get(0).x_coord > population.get(1).x_coord) {
@@ -463,7 +465,8 @@ public abstract class Critter {
 					}
 				}
 			}
-		}	
+		}
+		System.out.println("world step - sorted");
 		//now that world is sorted, ready to settle conflicts
 		fightStage = true;
 		for(int x = 0; x < population.size()-1; x++) {
@@ -514,9 +517,8 @@ public abstract class Critter {
 				//crit1 died in fighting, need to move back a crit
 				x--;
 			}
-			
 		}
-		
+		System.out.println("world step - fighting complete");
 		fightStage = false;
 		//apply rest cost and remove dead Critters, reset move flags, add babies to population
 		for(int i = 0; i < population.size(); i++) {
@@ -539,6 +541,8 @@ public abstract class Critter {
 				System.out.println("error refreshing algae");
 			}
 		}
+		System.out.println("world step - refreshed/end buisness");
+
 	}
 	
 	public static void displayWorld() {

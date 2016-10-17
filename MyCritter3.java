@@ -1,28 +1,56 @@
 package assignment4;
-
+//Moves Diagonally 
+//value 3 
+//
 public class MyCritter3 extends Critter {
-	
+
 	@Override
-	public String toString() { return "3"; }
-	
+	public String toString() {
+		return "3";
+	}
+
 	private static final int GENE_TOTAL = 8;
 	private int[] genes3 = new int[8];
 	private int dir;
-	
+	private boolean flag = false;
+
 	public MyCritter3() {
 		for (int k = 0; k < 8; k += 1) {
 			genes3[k] = GENE_TOTAL / 8;
 		}
 		dir = Critter.getRandomInt(8);
+		if (dir % 2 == 0 || dir == 0) {
+			flag = true;
+		} else {
+			flag = false;
+		}
+
+		while (flag == false) {
+			dir = Critter.getRandomInt(8);
+			if (dir % 2 != 0) {
+				flag = true;
+			}
+		}
+
 	}
-	
-	public boolean fight(String not_used) { return true; }
+
+	public int getValue(String opponent) {
+		return 3;
+	}
+
+	public boolean fight(String opponent) {
+		if (getEnergy() > 25 && getValue(this.toString()) > getValue(opponent))
+			return true;
+
+		return false;
+
+	}
 
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
 		walk(dir);
-		
+
 		if (getEnergy() > 150) {
 			MyCritter3 child = new MyCritter3();
 			for (int k = 0; k < 8; k += 1) {
@@ -37,17 +65,23 @@ public class MyCritter3 extends Critter {
 			child.genes3[g] += 1;
 			reproduce(child, Critter.getRandomInt(8));
 		}
-		
+
 		/* pick a new direction based on our genes3 */
-		int roll = Critter.getRandomInt(GENE_TOTAL);
-		int turn = 0;
-		while (genes3[turn] <= roll) {
-			roll = roll - genes3[turn];
-			turn = turn + 1;
+		flag = false;
+		while (flag == false) {
+			int roll = Critter.getRandomInt(GENE_TOTAL);
+			int turn = 0;
+			while (genes3[turn] <= roll) {
+				roll = roll - genes3[turn];
+				turn = turn + 1;
+			}
+			assert(turn < 8);
+			dir = (dir + turn) % 8;
+			if (dir % 2 != 0) {
+				flag = true;
+			}
 		}
-		assert(turn < 8);
-		
-		dir = (dir + turn) % 8;
+
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter3s) {
@@ -70,5 +104,3 @@ public class MyCritter3 extends Critter {
 		System.out.println();
 	}
 }
-
-

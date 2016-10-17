@@ -473,16 +473,17 @@ public abstract class Critter {
 				if(sameSquare(crit1, crit2)) {
 					boolean crit1Fight = crit1.fight(crit2.toString());
 					boolean crit2Fight = crit2.fight(crit1.toString());
-					
+					boolean resolved = false;
 					
 					if(crit2 != population.get(y)) {
 						if(y < population.size())
 							y--; //crit2 died in fight method need to move back a crit
+						resolved = true;
 					}
 					if(crit1 != population.get(x)) {
 						break;
 					}
-					else {
+					if(!resolved) {
 						//still need to resolve
 						if(sameSquare(crit1, crit2)){
 							//not resolved need to roll

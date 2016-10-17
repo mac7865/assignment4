@@ -68,7 +68,7 @@ public abstract class Critter {
 		if(direction == 0) {
 			//right
 			this.x_coord += 1;
-			if(this.x_coord > Params.world_width) {
+			if(this.x_coord >= Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
 		}
@@ -76,7 +76,7 @@ public abstract class Critter {
 			//up-right
 			this.x_coord += 1;
 			this.y_coord -= 1;
-			if(this.x_coord > Params.world_width) {
+			if(this.x_coord >= Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
 			if(this.y_coord < 0) {
@@ -86,7 +86,7 @@ public abstract class Critter {
 		if(direction == 2) {
 			//up
 			this.y_coord -= 1; 
-			if(this.y_coord < Params.world_height) {
+			if(this.y_coord < 0) {
 				this.y_coord += Params.world_height;
 			}
 		}
@@ -115,14 +115,14 @@ public abstract class Critter {
 			if(this.x_coord < 0) {
 				this.x_coord += Params.world_width;
 			}
-			if(this.y_coord > Params.world_height) {
+			if(this.y_coord >= Params.world_height) {
 				this.y_coord -= Params.world_height;
 			}
 		}
 		if(direction == 6) {
 			//down
 			this.y_coord += 1;
-			if(this.y_coord > Params.world_height) {
+			if(this.y_coord >= Params.world_height) {
 				this.y_coord -= Params.world_height;
 			}
 		}
@@ -130,10 +130,10 @@ public abstract class Critter {
 			//down-right
 			this.x_coord += 1;
 			this.y_coord += 1;
-			if(this.x_coord > Params.world_width) {
+			if(this.x_coord >= Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
-			if(this.y_coord > Params.world_height) {
+			if(this.y_coord >= Params.world_height) {
 				this.y_coord -= Params.world_height;
 			}
 		}
@@ -155,28 +155,28 @@ public abstract class Critter {
 		if(direction == 0) {
 			//right
 			this.x_coord += 1;
-			if(this.x_coord > Params.world_width) {
+			if(this.x_coord >= Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
 		}
 		if(direction == 2) {
 			//up
 			this.y_coord -= 2; 
-			if(this.y_coord < Params.world_height) {
+			if(this.y_coord <= Params.world_height) {
 				this.y_coord += Params.world_height;
 			}
 		}
 		if(direction == 4) {
 			//left
 			this.x_coord -= 2; 
-			if(this.x_coord < Params.world_width) {
+			if(this.x_coord <= Params.world_width) {
 				this.x_coord += Params.world_width;
 			}
 		}
 		if(direction == 6) {
 			//down
 			this.y_coord += 2;
-			if(this.y_coord > Params.world_height) {
+			if(this.y_coord >= Params.world_height) {
 				this.y_coord -= Params.world_height;
 			}
 		}
@@ -188,7 +188,7 @@ public abstract class Critter {
 		if(direction == 0) {
 			//right
 			x += distance;
-			if(x > Params.world_width) {
+			if(x >= Params.world_width) {
 				x -= Params.world_width;
 			}
 		}
@@ -196,7 +196,7 @@ public abstract class Critter {
 			//up-right
 			x += distance;
 			y -= distance;
-			if(x > Params.world_width) {
+			if(x >= Params.world_width) {
 				x -= Params.world_width;
 			}
 			if(y < 0) {
@@ -206,7 +206,7 @@ public abstract class Critter {
 		if(direction == 2) {
 			//up
 			y -= distance; 
-			if(y < Params.world_height) {
+			if(y < 0) {
 				y += Params.world_height;
 			}
 		}
@@ -235,14 +235,14 @@ public abstract class Critter {
 			if(x < 0) {
 				this.x_coord += Params.world_width;
 			}
-			if(y > Params.world_height) {
+			if(y >= Params.world_height) {
 				y -= Params.world_height;
 			}
 		}
 		if(direction == 6) {
 			//down
 			y += distance;
-			if(y > Params.world_height) {
+			if(y >= Params.world_height) {
 				y -= Params.world_height;
 			}
 		}
@@ -250,10 +250,10 @@ public abstract class Critter {
 			//down-right
 			x += distance;
 			y += distance;
-			if(x > Params.world_width) {
+			if(x >= Params.world_width) {
 				x -= Params.world_width;
 			}
-			if(y > Params.world_height) {
+			if(y >= Params.world_height) {
 				y -= Params.world_height;
 			}
 		}
@@ -263,6 +263,7 @@ public abstract class Critter {
 		}
 		return true;
 	}
+	
 	protected final void reproduce(Critter offspring, int direction) {
 		//make sure it has enough energy
 		if(this.energy < Params.min_reproduce_energy)
@@ -531,6 +532,7 @@ public abstract class Critter {
 	}
 	
 	public static void displayWorld() {
+		//board is board dimensions + 2 for border
 		String board[][] = new String[Params.world_width+2][Params.world_height+2];
 		//corners should be +'s
 		board[0][0] = "+";
@@ -551,7 +553,11 @@ public abstract class Critter {
 			board[Params.world_width+1][i] = "|";
 		}
 		for(Critter crit: population) {
-			//need to adjust for world border
+
+			if(crit.x_coord+1 >= Params.world_width+2)
+				System.out.println("bad x " + crit.x_coord);
+			if(crit.y_coord+1 >= Params.world_height+2)
+				System.out.println("bad y " + crit.y_coord);
 			board[crit.x_coord+1][crit.y_coord+1] = crit.toString();
 		}
 		for(int i = 0; i < board[0].length; i++) {

@@ -72,7 +72,6 @@ public class Main {
         System.out.println("GLHF");
         JunitTestMyCritterSample1 test = new JunitTestMyCritterSample1();
         try {
-        	Critter.displayWorld();
 			test.testWalk();
 			test.testWalkTwiceInOneTurn();
 		} catch (InvalidCritterException e) {

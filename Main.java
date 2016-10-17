@@ -75,7 +75,6 @@ public class Main {
         	Critter.displayWorld();
 			test.testWalk();
 			test.testWalkTwiceInOneTurn();
-			System.out.println("changed");
 		} catch (InvalidCritterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

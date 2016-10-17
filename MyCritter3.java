@@ -3,7 +3,7 @@ package assignment4;
 public class MyCritter3 extends Critter {
 	
 	@Override
-	public String toString() { return "C"; }
+	public String toString() { return "3"; }
 	
 	private static final int GENE_TOTAL = 8;
 	private int[] genes3 = new int[8];

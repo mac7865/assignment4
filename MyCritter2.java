@@ -4,7 +4,7 @@ package assignment4;
  * This Critter is good for testing running away while fighting, and for testing 
  * movement in different directions.
  */
-public class MyCritter2 extends MyCritter1 {
+public class MyCritter2 extends Critter.TestCritter {
 	
 	private int myDir = 0;
 	
@@ -28,3 +28,7 @@ public class MyCritter2 extends MyCritter1 {
 	}
 
 }
+	
+	
+
+	

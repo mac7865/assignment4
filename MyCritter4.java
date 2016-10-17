@@ -1,8 +1,8 @@
 package assignment4;
 
-public class MyCritter4 extends Critter {
+public class MyCritter4 extends Critter.TestCritter {
 	@Override
-	public String toString() { return "C"; }
+	public String toString() { return "4"; }
 	
 	private static final int GENE_TOTAL = 16;
 	private int[] genes4 = new int[8];
@@ -14,11 +14,16 @@ public class MyCritter4 extends Critter {
 		}
 		dir = Critter.getRandomInt(8);
 	}
+	public int getValue(String opponent) {
+		return 5;
+	}
 	
-	public boolean fight(String not_used) {
-		if (getEnergy() > 50) { 
-		return true; }
+	public boolean fight(String opponent) {
+		if (getEnergy() > 10 && getValue("THIS CRITTER IDENTITY") > getValue(opponent) ) 
+			return true;
+		
 		return false;
+	 		
 }
 
 	@Override
@@ -73,5 +78,3 @@ public class MyCritter4 extends Critter {
 		System.out.println();
 	}
 }
-
-

@@ -14,6 +14,8 @@ package assignment4;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.HashMap;
+import java.util.ArrayList;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -25,7 +27,9 @@ public abstract class Critter {
 	private static String myPackage;
 	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	private static HashMap<String, ArrayList<Critter>> world = new HashMap<String, ArrayList<Critter>>();
 	private static boolean fightStage = false;
+	
 	// Gets the package name.  This assumes that Critter and its subclasses are all in the same package.
 	static {
 		myPackage = Critter.class.getPackage().toString().split(" ")[1];
@@ -433,91 +437,78 @@ public abstract class Critter {
 		for(Critter crit: population) {
 			crit.doTimeStep();
 		}
+		for(int i = 0; i < population.size(); i++) {
+			Critter crit = population.get(i);
+			if(crit.energy <= 0)
+				population.remove(crit);
+		}
 		System.out.println("world step - stepped");
 		//sort world by x-coord if necessary
-		if(population.size() > 1){
-			if(population.get(0).x_coord > population.get(1).x_coord) {
-				Critter temp = population.get(0);
-				population.set(0, population.get(1));
-				population.set(1, temp);
-			}
-			for(int i = 0; i < population.size(); i++) {
-				for(int j = 0; j < population.size(); j++) {
-					if(population.get(i).x_coord > population.get(j).x_coord) {
-						Critter temp = population.get(i);
-						population.set(i, population.get(j));
-						population.set(j, temp);
-					}
-				}
-			}
-			//sort world by y-coord
-			if(population.get(0).y_coord > population.get(1).y_coord) {
-				Critter temp = population.get(0);
-				population.set(0, population.get(1));
-				population.set(1, temp);
-			}
-			for(int i = 0; i < population.size(); i++) {
-				for(int j = 0; j < population.size(); j++) {
-					if(population.get(i).y_coord > population.get(j).y_coord) {
-						Critter temp = population.get(i);
-						population.set(i, population.get(j));
-						population.set(j, temp);
-					}
-				}
-			}
-		}
+		scanWorld();
 		System.out.println("world step - sorted");
 		//now that world is sorted, ready to settle conflicts
 		fightStage = true;
-		for(int x = 0; x < population.size()-1; x++) {
-			Critter crit1 = population.get(x);
-			for(int y = x+1; y < population.size(); y++) {
-				Critter crit2 = population.get(y);
-				if(sameSquare(crit1, crit2)) {
-					boolean crit1Fight = crit1.fight(crit2.toString());
-					boolean crit2Fight = crit2.fight(crit1.toString());
-					boolean resolved = false;
-					
-					if(crit2 != population.get(y)) {
-						if(y < population.size())
-							y--; //crit2 died in fight method need to move back a crit
-						resolved = true;
-					}
-					if(crit1 != population.get(x)) {
-						break;
-					}
-					if(!resolved) {
-						//still need to resolve
-						if(sameSquare(crit1, crit2)){
-							//not resolved need to roll
-							int crit1Roll = 0;
-							int crit2Roll = 0;
-							if(crit1Fight)
-								crit1Roll = getRandomInt(crit1.energy);
-							if(crit2Fight)
-								crit2Roll = getRandomInt(crit2.energy);
-							if(crit1Roll  >= crit2Roll) {
-								//crit1 wins
-								crit1.energy += crit2.energy / 2;
-								//remove crit2, need to visit this number again
-								population.remove(crit2);
-								y--;
-							}
-							else {
-								//crit2 wins
-								crit2.energy += crit1.energy / 2;
-								population.remove(crit1);
-								break;
-							}
-						} 
+		int sum = 0;
+		System.out.println("fight start pop" + population.size());
+		for(int x = 0; x < Params.world_width; x++) {
+			for(int y = 0; y < Params.world_height; y++) {
+				sum += world.get(x+"x"+y).size();
+				ArrayList<Critter> col = world.get(x+"x"+y);
+				for(int i = 0; i < col.size()-1; i++) {
+					Critter crit1 = col.get(i);
+					Critter crit2 = col.get(i+1);
+					if(sameSquare(crit1, crit2)) {
+						boolean crit1Fight = crit1.fight(crit2.toString());
+						boolean crit2Fight = crit2.fight(crit1.toString());
+						boolean resolved = false;
+						
+						if(crit2.energy <= 0) {
+							//died in fight method
+							col.remove(i+1);
+							population.remove(crit2);
+							i--;
+							resolved = true;
+						}
+						if(crit1.energy <= 0) {
+							//died in fight method
+							population.remove(crit1);
+							col.remove(i);
+							i--;
+							resolved = true;
+						}
+						if(!resolved) {
+							//still need to resolve
+							if(sameSquare(crit1, crit2)) {
+								//not resolved need to roll
+								int crit1Roll = 0;
+								int crit2Roll = 0;
+								if(crit1Fight)
+									crit1Roll = getRandomInt(crit1.energy);
+								if(crit2Fight)
+									crit2Roll = getRandomInt(crit2.energy);
+								if(crit1Roll  >= crit2Roll) {
+									//crit1 wins
+									crit1.energy += crit2.energy / 2;
+									//remove crit2, need to visit this number again
+									col.remove(crit2);
+									population.remove(crit2);
+									i--;
+								}
+								else {
+									//crit2 wins
+									crit2.energy += crit1.energy / 2;
+									col.remove(crit1);
+									population.remove(crit1);
+									i--;
+								}
+							} 
+						}
 					}
 				}
-			}
-			if(crit1 != population.get(x)) {
-				//crit1 died in fighting, need to move back a crit
-				x--;
+				
 			}
 		}
+		System.out.println("Population: " + population.size());
 		System.out.println("world step - fighting complete");
 		fightStage = false;
 		//apply rest cost and remove dead Critters, reset move flags, add babies to population
@@ -532,6 +523,8 @@ public abstract class Critter {
 			population.add(baby);
 			baby.moved = false;
 		}
+		//babies added clear the lsit for next turn
+		babies.clear();
 		//refresh algae
 		for(int i = 0; i < Params.refresh_algae_count; i++) {
 			try {
@@ -541,6 +534,7 @@ public abstract class Critter {
 				System.out.println("error refreshing algae");
 			}
 		}
+		clearWorldLists();
 		System.out.println("world step - refreshed/end buisness");
 
 	}
@@ -567,11 +561,6 @@ public abstract class Critter {
 			board[Params.world_width+1][i] = "|";
 		}
 		for(Critter crit: population) {
-
-			if(crit.x_coord+1 >= Params.world_width+2)
-				System.out.println("bad x " + crit.x_coord);
-			if(crit.y_coord+1 >= Params.world_height+2)
-				System.out.println("bad y " + crit.y_coord);
 			board[crit.x_coord+1][crit.y_coord+1] = crit.toString();
 		}
 		for(int i = 0; i < board[0].length; i++) {
@@ -593,4 +582,32 @@ public abstract class Critter {
 	public static boolean sameSquare(Critter crit1, Critter crit2){
 		return (crit1.x_coord == crit2.x_coord) && (crit1.y_coord == crit2.y_coord);
 	}
+	
+	public static void setUpWorld() {
+		for(int i = 0; i < Params.world_width; i++) {
+			for(int j = 0; j < Params.world_height; j++) {
+				ArrayList<Critter> col = new ArrayList<Critter>();
+				world.put(i+"x"+j, col);
+			}
+		}
+	}
+	
+	public static void scanWorld() {
+		for(Critter crit: population) {
+			ArrayList<Critter> col = world.get(crit.x_coord+"x"+crit.y_coord);
+			col.add(crit);
+		}
+	}
+	
+	public static void clearWorldLists() {
+		int sum = 0;
+		for(int i = 0; i < Params.world_width; i++) {
+			for(int j = 0; j < Params.world_height; j++) {
+				sum += world.get(i+"x"+j).size();
+				world.get(i+"x"+j).clear();
+			}
+		}
+		System.out.println("Clearing sum: "+ sum);
+	}
+	
 }

@@ -1,5 +1,6 @@
 package assignment4;
-
+// Moves in square formation 
+//reproduces 
 public class MyCritter4 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "4"; }
@@ -7,16 +8,19 @@ public class MyCritter4 extends Critter.TestCritter {
 	private static final int GENE_TOTAL = 16;
 	private int[] genes4 = new int[8];
 	private int dir;
+	private int pos;
 	
 	public MyCritter4() {
 		for (int k = 0; k < 8; k += 1) {
 			genes4[k] = GENE_TOTAL / 8;
 		}
-		dir = Critter.getRandomInt(8);
+		dir = Critter.getRandomInt(4)*2;
+		pos=0;
 	}
 	public int getValue(String opponent) {
-		return 5;
+		return 3;
 	}
+	
 	
 	public boolean fight(String opponent) {
 		if (getEnergy() > 10 && getValue("THIS CRITTER IDENTITY") > getValue(opponent) ) 
@@ -30,7 +34,6 @@ public class MyCritter4 extends Critter.TestCritter {
 	public void doTimeStep() {
 		/* take one step forward */
 		walk(dir);
-		
 		if (getEnergy() > 150) {
 			MyCritter4 child = new MyCritter4();
 			for (int k = 0; k < 8; k += 1) {
@@ -46,16 +49,9 @@ public class MyCritter4 extends Critter.TestCritter {
 			reproduce(child, Critter.getRandomInt(8));
 		}
 		
-		/* pick a new direction based on our genes4 */
-		int roll = Critter.getRandomInt(GENE_TOTAL);
-		int turn = 0;
-		while (genes4[turn] <= roll) {
-			roll = roll - genes4[turn];
-			turn = turn + 1;
-		}
-		assert(turn < 8);
-		
-		dir = (dir + turn) % 8;
+		if(pos==5) dir+=2;
+		if( dir==8) dir=0;
+		pos++;
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter4s) {

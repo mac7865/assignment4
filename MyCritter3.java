@@ -1,7 +1,7 @@
 package assignment4;
 //Moves Diagonally 
 //value 3 
-//
+
 public class MyCritter3 extends Critter {
 
 	@Override

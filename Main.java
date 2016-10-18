@@ -11,8 +11,10 @@
  * Fall 2016
  */
 package assignment4; // cannot be in default package
+import java.util.List;
 import java.util.Scanner;
 import java.io.*;
+import java.lang.reflect.Method;
 
 
 /*
@@ -149,8 +151,10 @@ public class Main {
 	        			invalid = true;
 	        		else {
 	        			try{
-	        				
-	        				Critter.runStats(Critter.getInstances(command[1]));
+	        				Class<?> cl = Class.forName("assignment4."+command[1]);
+	        				Class<?>[] types = {List.class};
+	        				Method m = cl.getMethod("runStats", types);
+	        				m.invoke(null, Critter.getInstances(command[1]));
 	        			}
 	        			catch(Exception e) {
 	        				System.out.println("error processing: " + fullCommand);

@@ -70,17 +70,10 @@ public class Main {
         /* Write your code below. */
         
         System.out.println("GLHF");
-        JunitTestMyCritterSample1 test = new JunitTestMyCritterSample1();
-        try {
-			test.testWalk();
-			test.testWalkTwiceInOneTurn();
-		} catch (InvalidCritterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+        //setup world of arraylists to keep track of critters
+        Critter.setUpWorld();
         while(true) {
-        	System.out.print("What is your command? : ");
+        	System.out.print("critters>");
         	String fullCommand = kb.nextLine();
         	String[] command = fullCommand.split("\\s+");
         	boolean invalid = false;
@@ -99,7 +92,7 @@ public class Main {
 	        		else
 	        			invalid = true;
 	        	}
-	        	else if(command[0].equals("step")) {
+	        	else if (command[0].equals("step")) {
 	        		if(command.length > 2) //invalid step command
 	        			invalid = true;
 	        		else{
@@ -156,12 +149,16 @@ public class Main {
 	        			invalid = true;
 	        		else {
 	        			try{
+	        				
 	        				Critter.runStats(Critter.getInstances(command[1]));
 	        			}
 	        			catch(Exception e) {
 	        				System.out.println("error processing: " + fullCommand);
 	        			}
 	        		}
+	        	}
+	        	else{
+	        		System.out.println("invalid command: " + fullCommand);
 	        	}
         	}
         	if(invalid) {

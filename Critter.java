@@ -158,7 +158,7 @@ public abstract class Critter {
 		}
 		if(direction == 0) {
 			//right
-			this.x_coord += 1;
+			this.x_coord += 2;
 			if(this.x_coord >= Params.world_width) {
 				this.x_coord -= Params.world_width;
 			}
@@ -166,14 +166,14 @@ public abstract class Critter {
 		if(direction == 2) {
 			//up
 			this.y_coord -= 2; 
-			if(this.y_coord <= Params.world_height) {
+			if(this.y_coord < 0) {
 				this.y_coord += Params.world_height;
 			}
 		}
 		if(direction == 4) {
 			//left
 			this.x_coord -= 2; 
-			if(this.x_coord <= Params.world_width) {
+			if(this.x_coord < 0) {
 				this.x_coord += Params.world_width;
 			}
 		}

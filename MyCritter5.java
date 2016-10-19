@@ -12,8 +12,11 @@ public class MyCritter5 extends TestCritter {
 		// TODO Auto-generated method stub
 		int direction = (lastDir + 1) % 8;
 		//Critter will run when possible in a swirling motion
+		
+		//It will also try to reproduce as much as possible
 		if(getEnergy() > Params.min_reproduce_energy) {
-			//reproduce();
+			MyCritter5 child = new MyCritter5();
+			reproduce(child, lastDir);
 		}
 		if(direction%2 == 0)
 			run(direction);

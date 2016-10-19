@@ -9,7 +9,7 @@ public class MyCritter6 extends TestCritter {
 	@Override
 	public void doTimeStep() {
 		// TODO Auto-generated method stub
-		
+		run(2);
 	}
 
 	@Override

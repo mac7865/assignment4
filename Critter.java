@@ -55,6 +55,9 @@ public abstract class Critter {
 	private int y_coord;
 	private boolean moved = false;
 	
+	/**
+	 * move 1 square in specified direction, apply energy cost
+	 */
 	protected final void walk(int direction) {
 		this.energy -= Params.walk_energy_cost;
 		if(moved){			
@@ -143,6 +146,9 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * move 2 square in any straight line, apply run energy cost
+	 */
 	protected final void run(int direction) {
 		//run 2 tiles, straight lines only
 		//if they go past the board limits, set them to other side of board
@@ -185,9 +191,10 @@ public abstract class Critter {
 			}
 		}
 	}
-	
-	//looks in given direction to see if critter is located there
-	//returns true if location is empty, false if occupied
+	/**
+	* looks in given direction to see if critter is located there
+	* returns true if location is empty, false if occupied
+	*/
 	public boolean look(int x, int y, int distance, int direction) {
 		if(direction == 0) {
 			//right
@@ -268,6 +275,9 @@ public abstract class Critter {
 		return true;
 	}
 	
+	/**
+	 * Split energy up between parent and offspring, give baby initial coordinates
+	 */
 	protected final void reproduce(Critter offspring, int direction) {
 		//make sure it has enough energy
 		if(this.energy < Params.min_reproduce_energy)
@@ -419,7 +429,7 @@ public abstract class Critter {
 	}
 
 	/**
-	 * Clear the world of all critters, dead and alive
+	 * Clear the world by emptying the population and babies lists
 	 */
 	public static void clearWorld() {
 		//clear board
@@ -431,8 +441,14 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * World time step begins by doing every alive critters time step.
+	 * It then scans the world and calculates every necessary fight
+	 * Rest energy cost is applied to each alive critter
+	 * Babies are added to world
+	 * Turn Algae added to world
+	 */
 	public static void worldTimeStep() {
-		System.out.println("world step - begin");
 		//do every critter's time step move
 		for(Critter crit: population) {
 			crit.doTimeStep();
@@ -442,17 +458,15 @@ public abstract class Critter {
 			if(crit.energy <= 0)
 				population.remove(crit);
 		}
-		System.out.println("world step - stepped");
+
 		//sort world by x-coord if necessary
 		scanWorld();
-		System.out.println("world step - sorted");
+
 		//now that world is sorted, ready to settle conflicts
 		fightStage = true;
-		int sum = 0;
-		System.out.println("fight start pop" + population.size());
+
 		for(int x = 0; x < Params.world_width; x++) {
 			for(int y = 0; y < Params.world_height; y++) {
-				sum += world.get(x+"x"+y).size();
 				ArrayList<Critter> col = world.get(x+"x"+y);
 				for(int i = 0; i < col.size()-1; i++) {
 					Critter crit1 = col.get(i);
@@ -508,8 +522,7 @@ public abstract class Critter {
 				
 			}
 		}
-		System.out.println("Population: " + population.size());
-		System.out.println("world step - fighting complete");
+
 		fightStage = false;
 		//apply rest cost and remove dead Critters, reset move flags, add babies to population
 		for(int i = 0; i < population.size(); i++) {
@@ -535,10 +548,12 @@ public abstract class Critter {
 			}
 		}
 		clearWorldLists();
-		System.out.println("world step - refreshed/end buisness");
 
 	}
 	
+	/**
+	 * Loops through the board and prints each square
+	 */
 	public static void displayWorld() {
 		//board is board dimensions + 2 for border
 		String board[][] = new String[Params.world_width+2][Params.world_height+2];
@@ -579,10 +594,16 @@ public abstract class Critter {
 			
 	}
 	
+	/**
+	 * Return true if the critters occupy same space, else false
+	 */
 	public static boolean sameSquare(Critter crit1, Critter crit2){
 		return (crit1.x_coord == crit2.x_coord) && (crit1.y_coord == crit2.y_coord);
 	}
 	
+	/**
+	 * Fill HashMap with empty arraylists
+	 */
 	public static void setUpWorld() {
 		for(int i = 0; i < Params.world_width; i++) {
 			for(int j = 0; j < Params.world_height; j++) {
@@ -592,6 +613,9 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * Loop through critters and add them to appropriate arraylist for what square they are on
+	 */
 	public static void scanWorld() {
 		for(Critter crit: population) {
 			ArrayList<Critter> col = world.get(crit.x_coord+"x"+crit.y_coord);
@@ -599,15 +623,15 @@ public abstract class Critter {
 		}
 	}
 	
+	/**
+	 * Clear the boards arraylists
+	 */
 	public static void clearWorldLists() {
-		int sum = 0;
 		for(int i = 0; i < Params.world_width; i++) {
 			for(int j = 0; j < Params.world_height; j++) {
-				sum += world.get(i+"x"+j).size();
 				world.get(i+"x"+j).clear();
 			}
 		}
-		System.out.println("Clearing sum: "+ sum);
 	}
 	
 }

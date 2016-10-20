@@ -1,4 +1,5 @@
-/* CRITTERS Main.java
+package assignment4;
+/* CRITTERS Critter6.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -11,22 +12,16 @@
  * Fall 2016
  */
 
-package assignment4;
 // MONSTER THAT JUST FIGHTS 
 //Moves in cirles 
-public class Critter6 extends Critter {
+public class Critter6 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "6"; }
-	
-	private static final int GENE_TOTAL = 16;
-	private int[] genes6 = new int[8];
+
 	private int dir;
 	private int pos;
 	
 	public Critter6() {
-		for (int k = 0; k < 8; k += 1) {
-			genes6[k] =GENE_TOTAL / 8;
-		}
 		dir = Critter.getRandomInt(8);
 		pos=0;
 	}
@@ -42,7 +37,7 @@ public class Critter6 extends Critter {
 	@Override
 	public void doTimeStep() {
 		/* take one step forward */
-		run(dir);
+		walk(dir);
 		
 		if(pos==5) dir+=1;
 		if( dir==8) dir=0;
@@ -50,22 +45,6 @@ public class Critter6 extends Critter {
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter6s) {
-		int total_straight = 0;
-		int total_left = 0;
-		int total_right = 0;
-		int total_back = 0;
-		for (Object obj : MyCritter6s) {
-			Critter6 c = (Critter6) obj;
-			total_straight += c.genes6[0];
-			total_right += c.genes6[1] + c.genes6[2] + c.genes6[3];
-			total_back += c.genes6[4];
-			total_left += c.genes6[5] + c.genes6[6] + c.genes6[7];
-		}
 		System.out.print("" + MyCritter6s.size() + " total MyCritter6s    ");
-		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * MyCritter6s.size()) + "% straight   ");
-		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * MyCritter6s.size()) + "% back   ");
-		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * MyCritter6s.size()) + "% right   ");
-		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * MyCritter6s.size()) + "% left   ");
-		System.out.println();
 	}
 }

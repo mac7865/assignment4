@@ -1,3 +1,5 @@
+package assignment4; // cannot be in default package
+
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
@@ -10,18 +12,12 @@
  * Slip days used: <0>
  * Fall 2016
  */
-package assignment4; // cannot be in default package
 import java.util.List;
 import java.util.Scanner;
 import java.io.*;
 import java.lang.reflect.Method;
 
 
-/*
- * Usage: java <pkgname>.Main <input file> test
- * input file is optional.  If input file is specified, the word 'test' is optional.
- * May not use 'test' argument without specifying input file.
- */
 public class Main {
 
     static Scanner kb;	// scanner connected to keyboard input, or input file

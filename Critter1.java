@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter1.java
+/* CRITTERS Critter1.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -13,7 +13,7 @@ package assignment4;
  */
 import java.util.*;
 
-public class MyCritter1 extends Critter {
+public class Critter1 extends Critter {
 
 	@Override
 	public void doTimeStep() {

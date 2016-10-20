@@ -1,4 +1,5 @@
-/* CRITTERS Main.java
+package assignment4;
+/* CRITTERS Critter3.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -11,10 +12,10 @@
  * Fall 2016
  */
 
-package assignment4;
-//Moves Diagonally 
-
-//ageing Critter
+/**
+* Moves Diagonally 
+* value 3 
+*/
 
 public class Critter3 extends Critter {
 
@@ -27,7 +28,6 @@ public class Critter3 extends Critter {
 	private int[] genes3 = new int[8];
 	private int dir;
 	private boolean flag = false;
-	private int age = 0;
 
 	public Critter3() {
 		for (int k = 0; k < 8; k += 1) {
@@ -49,24 +49,24 @@ public class Critter3 extends Critter {
 
 	}
 
+	public int getValue(String opponent) {
+		return 3;
+	}
+
 	public boolean fight(String opponent) {
-			if (age > 2 && age <= 12)
+		if (getEnergy() > 25 && getValue(this.toString()) > getValue(opponent))
 			return true;
 
-			else{		
-		walk(dir);
 		return false;
-			}
+
 	}
 
 	@Override
 	public void doTimeStep() {
+		/* take one step forward */
+		walk(dir);
 
-		if (age > 5 && age <= 9) {
-			run(dir);
-		}
-
-		if (getEnergy() > 150 && (age > 9 && age < 13)) {
+		if (getEnergy() > 150) {
 			Critter3 child = new Critter3();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes3[k] = this.genes3[k];
@@ -79,9 +79,8 @@ public class Critter3 extends Critter {
 			g = Critter.getRandomInt(8);
 			child.genes3[g] += 1;
 			reproduce(child, Critter.getRandomInt(8));
-		} else {
-			walk(dir);
 		}
+
 		/* pick a new direction based on our genes3 */
 		flag = false;
 		while (flag == false) {
@@ -97,7 +96,7 @@ public class Critter3 extends Critter {
 				flag = true;
 			}
 		}
-		age++;
+
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter3s) {

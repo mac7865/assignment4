@@ -1,16 +1,17 @@
 package assignment4;
-
-import assignment4.Critter.TestCritter;
-
-public class MyCritter5 extends TestCritter {
+//Bunny rabbit
+public class MyCritter5 extends Critter {
+	@Override
+	public String toString() { return "5"; }
 	
-	boolean willFight;
-	int lastDir = 0;
+	private int lastDir = 0;
 	
 	@Override
 	public void doTimeStep() {
 		// TODO Auto-generated method stub
 		int direction = (lastDir + 1) % 8;
+		walk(direction);
+		lastDir = direction;
 		//Critter will run when possible in a swirling motion
 		
 		//It will also try to reproduce as much as possible
@@ -18,25 +19,16 @@ public class MyCritter5 extends TestCritter {
 			MyCritter5 child = new MyCritter5();
 			reproduce(child, lastDir);
 		}
-		if(direction%2 == 0)
-			run(direction);
-		else
-			walk(direction);
-		
-		
 	}
-
-	@Override
+	
+	
 	public boolean fight(String opponent) {
-
-		if (opponent.equals("@"))
-			return true;
-		willFight = getRandomInt(1) == 1;
-		return willFight;
+		return true;
+	 		
 	}
 
-	@Override
-	public String toString () {
-		return "5";
+
+	public static void runStats(java.util.List<Critter> MyCritter5s) {
+		System.out.print("" + MyCritter5s.size() + " total MyCritter5s    ");
 	}
 }

@@ -5,9 +5,9 @@ package assignment4;
  * Mark Carter
  * mac7865
  * 16495
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
+ * <Sean Conlon>
+ * <spc927>
+ * <16455>
  * Slip days used: <0>
  * Fall 2016
  */

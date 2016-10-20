@@ -2,7 +2,7 @@ package assignment4;
 
 import java.util.*;
 
-public class MyCritter1 extends Critter.TestCritter {
+public class MyCritter1 extends Critter {
 
 	@Override
 	public void doTimeStep() {
@@ -14,7 +14,7 @@ public class MyCritter1 extends Critter.TestCritter {
 	
 	@Override
 	public boolean fight(String opponent) {
-		if (getEnergy() > 10 && getValue("THIS CRITTER IDENTITY") > getValue(opponent) ) return true;
+		if (getEnergy() > 10) return true;
 		return false;
 	}
 	
@@ -22,7 +22,7 @@ public class MyCritter1 extends Critter.TestCritter {
 		return "1";
 	}
 	
-	public void test (List<Critter> l) {
+	//public void test (List<Critter> l) {
 		
-	}
+	//}
 }

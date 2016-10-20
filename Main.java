@@ -37,6 +37,10 @@ public class Main {
      * Main method.
      * @param args args can be empty.  If not empty, provide two parameters -- the first is a file name, 
      * and the second is test (for test output, where all output to be directed to a String), or nothing.
+     * Runs a while loop to take in commands
+     * Compares command to a known list and excutes the command
+     * If the command is quit the program terminates
+     * Otherwise it asks for another command
      */
     public static void main(String[] args) { 
         if (args.length != 0) {

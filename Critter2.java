@@ -21,6 +21,9 @@ public class Critter2 extends Critter {
 	private int myDir = 0;
 	
 	@Override
+	/**
+     * This critter walks in a counter-clock wise spiral over time
+     */
 	public void doTimeStep () {
 		walk(myDir);
 		myDir = (myDir+1)%8; // change direction each walk call, CCW.

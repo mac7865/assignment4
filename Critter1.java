@@ -16,14 +16,21 @@ import java.util.*;
 public class Critter1 extends Critter {
 
 	@Override
+	/**
+	 * This critter walks forward every turn
+     */
 	public void doTimeStep() {
 		walk(0);
 	}
+	
 	public int getValue(String opponent) {
 		return 3;
 	}
 	
 	@Override
+	/**
+     * Critter 1 always wants to fight
+     */
 	public boolean fight(String opponent) {
 		if (getEnergy() > 10) return true;
 		return false;

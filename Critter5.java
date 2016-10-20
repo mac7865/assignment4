@@ -58,7 +58,7 @@ public class Critter5 extends Critter {
 		reproduce(child, Critter.getRandomInt(8));
 
 		dir += 1;
-		if (dir == 8)
+		if (dir >= 8)
 			dir = 0;
 	}
 

@@ -74,7 +74,7 @@ public class Critter4 extends Critter.TestCritter {
 
 		if (pos == 5)
 			dir += 2;
-		if (dir == 8)
+		if (dir >= 8)
 			dir = 0;
 		pos++;
 		age--;

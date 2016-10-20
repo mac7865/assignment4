@@ -64,7 +64,7 @@ public class Critter6 extends Critter {
 		run(dir);
 		
 		if(pos==5) dir+=1;
-		if( dir==8) dir=0;
+		if( dir >= 8) dir=0;
 		pos++;
 	}
 

@@ -71,7 +71,6 @@ public class Main {
         /* Do not alter the code above for your submission. */
         /* Write your code below. */
         
-        System.out.println("GLHF");
         //setup world of arraylists to keep track of critters
         Critter.setUpWorld();
         while(true) {

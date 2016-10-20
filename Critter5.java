@@ -13,7 +13,7 @@ package assignment4;
  */
 
 //Bunny rabbit
-public class Critter5 extends Critter {
+public class Critter5 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "5"; }
 	

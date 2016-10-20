@@ -12,8 +12,10 @@ package assignment4;
  * Fall 2016
  */
 
-//Moves Diagonally 
-//value 3 
+/**
+* Moves Diagonally 
+* value 3 
+*/
 
 public class Critter3 extends Critter {
 

@@ -14,7 +14,7 @@ package assignment4;
 
 // MONSTER THAT JUST FIGHTS 
 //Moves in cirles 
-public class Critter6 extends Critter {
+public class Critter6 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "6"; }
 

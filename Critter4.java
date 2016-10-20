@@ -12,8 +12,11 @@ package assignment4;
  * Fall 2016
  */
 
-// Moves in square formation 
-//reproduces 
+/**
+ 
+ * Moves in square formation 
+ * reproduces as much as possible
+*/
 public class Critter4 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "4"; }

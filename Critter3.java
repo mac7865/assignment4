@@ -1,5 +1,4 @@
-package assignment4;
-/* CRITTERS Critter3.java
+/* CRITTERS Main.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -12,10 +11,10 @@ package assignment4;
  * Fall 2016
  */
 
-/**
-* Moves Diagonally 
-* value 3 
-*/
+package assignment4;
+//Moves Diagonally 
+
+//ageing Critter
 
 public class Critter3 extends Critter {
 
@@ -28,6 +27,7 @@ public class Critter3 extends Critter {
 	private int[] genes3 = new int[8];
 	private int dir;
 	private boolean flag = false;
+	private int age = 0;
 
 	public Critter3() {
 		for (int k = 0; k < 8; k += 1) {
@@ -49,27 +49,24 @@ public class Critter3 extends Critter {
 
 	}
 
-	public int getValue(String opponent) {
-		return 3;
-	}
-
 	public boolean fight(String opponent) {
-		if (getEnergy() > 25 && getValue(this.toString()) > getValue(opponent))
+			if (age > 2 && age <= 12)
 			return true;
 
+			else{		
+		walk(dir);
 		return false;
-
+			}
 	}
 
 	@Override
-	/**
-	 * This Critter will reproduce if it has a lot of energy( > 150)
-     */
 	public void doTimeStep() {
-		/* take one step forward */
-		walk(dir);
 
-		if (getEnergy() > 150) {
+		if (age > 5 && age <= 9) {
+			run(dir);
+		}
+
+		if (getEnergy() > 150 && (age > 9 && age < 13)) {
 			Critter3 child = new Critter3();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes3[k] = this.genes3[k];
@@ -82,8 +79,9 @@ public class Critter3 extends Critter {
 			g = Critter.getRandomInt(8);
 			child.genes3[g] += 1;
 			reproduce(child, Critter.getRandomInt(8));
+		} else {
+			walk(dir);
 		}
-
 		/* pick a new direction based on our genes3 */
 		flag = false;
 		while (flag == false) {
@@ -99,11 +97,26 @@ public class Critter3 extends Critter {
 				flag = true;
 			}
 		}
-
+		age++;
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter3s) {
+		int total_straight = 0;
+		int total_left = 0;
+		int total_right = 0;
+		int total_back = 0;
+		for (Object obj : MyCritter3s) {
+			Critter3 c = (Critter3) obj;
+			total_straight += c.genes3[0];
+			total_right += c.genes3[1] + c.genes3[2] + c.genes3[3];
+			total_back += c.genes3[4];
+			total_left += c.genes3[5] + c.genes3[6] + c.genes3[7];
+		}
 		System.out.print("" + MyCritter3s.size() + " total MyCritter3s    ");
+		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * MyCritter3s.size()) + "% straight   ");
+		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * MyCritter3s.size()) + "% back   ");
+		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * MyCritter3s.size()) + "% right   ");
+		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * MyCritter3s.size()) + "% left   ");
 		System.out.println();
 	}
 }

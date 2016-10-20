@@ -53,7 +53,7 @@ public class Critter4 extends Critter.TestCritter {
 			walk(dir);
 		}
 
-		if (getEnergy() > 150 && (age > 80 && age <= 95)) {
+		if (getEnergy() > 150 && (age > 89 && age <= 95)) {
 			Critter4 child = new Critter4();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes4[k] = this.genes4[k];

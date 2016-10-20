@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter4.java
+/* CRITTERS Critter4.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -14,7 +14,7 @@ package assignment4;
 
 // Moves in square formation 
 //reproduces 
-public class MyCritter4 extends Critter.TestCritter {
+public class Critter4 extends Critter.TestCritter {
 	@Override
 	public String toString() { return "4"; }
 	
@@ -23,7 +23,7 @@ public class MyCritter4 extends Critter.TestCritter {
 	private int dir;
 	private int pos;
 	
-	public MyCritter4() {
+	public Critter4() {
 		for (int k = 0; k < 8; k += 1) {
 			genes4[k] = GENE_TOTAL / 8;
 		}
@@ -48,7 +48,7 @@ public class MyCritter4 extends Critter.TestCritter {
 		/* take one step forward */
 		walk(dir);
 		if (getEnergy() > 150) {
-			MyCritter4 child = new MyCritter4();
+			Critter4 child = new Critter4();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes4[k] = this.genes4[k];
 			}
@@ -73,7 +73,7 @@ public class MyCritter4 extends Critter.TestCritter {
 		int total_right = 0;
 		int total_back = 0;
 		for (Object obj : MyCritter4s) {
-			MyCritter4 c = (MyCritter4) obj;
+			Critter4 c = (Critter4) obj;
 			total_straight += c.genes4[0];
 			total_right += c.genes4[1] + c.genes4[2] + c.genes4[3];
 			total_back += c.genes4[4];

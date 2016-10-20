@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter3.java
+/* CRITTERS Critter3.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -15,7 +15,7 @@ package assignment4;
 //Moves Diagonally 
 //value 3 
 
-public class MyCritter3 extends Critter {
+public class Critter3 extends Critter {
 
 	@Override
 	public String toString() {
@@ -27,7 +27,7 @@ public class MyCritter3 extends Critter {
 	private int dir;
 	private boolean flag = false;
 
-	public MyCritter3() {
+	public Critter3() {
 		for (int k = 0; k < 8; k += 1) {
 			genes3[k] = GENE_TOTAL / 8;
 		}
@@ -65,7 +65,7 @@ public class MyCritter3 extends Critter {
 		walk(dir);
 
 		if (getEnergy() > 150) {
-			MyCritter3 child = new MyCritter3();
+			Critter3 child = new Critter3();
 			for (int k = 0; k < 8; k += 1) {
 				child.genes3[k] = this.genes3[k];
 			}
@@ -103,7 +103,7 @@ public class MyCritter3 extends Critter {
 		int total_right = 0;
 		int total_back = 0;
 		for (Object obj : MyCritter3s) {
-			MyCritter3 c = (MyCritter3) obj;
+			Critter3 c = (Critter3) obj;
 			total_straight += c.genes3[0];
 			total_right += c.genes3[1] + c.genes3[2] + c.genes3[3];
 			total_back += c.genes3[4];

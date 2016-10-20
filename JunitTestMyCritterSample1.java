@@ -40,7 +40,7 @@ public class JunitTestMyCritterSample1 {
 	 */
 	public void testWalk() throws InvalidCritterException {
 		Critter.makeCritter("MyCritter1");
-		MyCritter1 m1 = (MyCritter1) Critter.TestCritter.getPopulation().get(0);
+		Critter1 m1 = (Critter1) Critter.TestCritter.getPopulation().get(0);
 		int x1a = m1.getX_coord(); int  y1a = m1.getY_coord();
 		m1.doTimeStep();
 		int x1b = m1.getX_coord(); int  y1b = m1.getY_coord();
@@ -55,7 +55,7 @@ public class JunitTestMyCritterSample1 {
 	 * This test does not use MakeCritter.
 	 */
 	public void testWalkTwiceInOneTurn() {
-		MyCritter2 m2 = new MyCritter2();
+		Critter2 m2 = new Critter2();
 		int x, y;
 		x = 2; y = 2; // Start position
 		m2.setX_coord(x);

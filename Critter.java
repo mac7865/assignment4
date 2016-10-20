@@ -449,7 +449,6 @@ public abstract class Critter {
 	 * Turn Algae added to world
 	 */
 	public static void worldTimeStep() {
-		System.out.println("world step - begin");
 		//do every critter's time step move
 		for(Critter crit: population) {
 			crit.doTimeStep();
@@ -459,17 +458,15 @@ public abstract class Critter {
 			if(crit.energy <= 0)
 				population.remove(crit);
 		}
-		System.out.println("world step - stepped");
+
 		//sort world by x-coord if necessary
 		scanWorld();
-		System.out.println("world step - sorted");
+
 		//now that world is sorted, ready to settle conflicts
 		fightStage = true;
-		int sum = 0;
-		System.out.println("fight start pop" + population.size());
+
 		for(int x = 0; x < Params.world_width; x++) {
 			for(int y = 0; y < Params.world_height; y++) {
-				sum += world.get(x+"x"+y).size();
 				ArrayList<Critter> col = world.get(x+"x"+y);
 				for(int i = 0; i < col.size()-1; i++) {
 					Critter crit1 = col.get(i);
@@ -525,8 +522,7 @@ public abstract class Critter {
 				
 			}
 		}
-		System.out.println("Population: " + population.size());
-		System.out.println("world step - fighting complete");
+
 		fightStage = false;
 		//apply rest cost and remove dead Critters, reset move flags, add babies to population
 		for(int i = 0; i < population.size(); i++) {

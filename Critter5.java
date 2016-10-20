@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter5.java
+/* CRITTERS Critter5.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -13,7 +13,7 @@ package assignment4;
  */
 
 //Bunny rabbit
-public class MyCritter5 extends Critter {
+public class Critter5 extends Critter {
 	@Override
 	public String toString() { return "5"; }
 	
@@ -29,7 +29,7 @@ public class MyCritter5 extends Critter {
 		
 		//It will also try to reproduce as much as possible
 		if(getEnergy() > Params.min_reproduce_energy) {
-			MyCritter5 child = new MyCritter5();
+			Critter5 child = new Critter5();
 			reproduce(child, lastDir);
 		}
 	}

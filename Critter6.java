@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter6.java
+/* CRITTERS Critter6.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -14,14 +14,14 @@ package assignment4;
 
 // MONSTER THAT JUST FIGHTS 
 //Moves in cirles 
-public class MyCritter6 extends Critter {
+public class Critter6 extends Critter {
 	@Override
 	public String toString() { return "6"; }
 
 	private int dir;
 	private int pos;
 	
-	public MyCritter6() {
+	public Critter6() {
 		dir = Critter.getRandomInt(8);
 		pos=0;
 	}

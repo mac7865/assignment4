@@ -1,5 +1,5 @@
 package assignment4;
-/* CRITTERS MyCritter2.java
+/* CRITTERS Critter2.java
  * EE422C Project 4 submission by
  * Replace <...> with your actual data.
  * Mark Carter
@@ -16,7 +16,7 @@ package assignment4;
  * This Critter is good for testing running away while fighting, and for testing 
  * movement in different directions.
  */
-public class MyCritter2 extends Critter {
+public class Critter2 extends Critter {
 	
 	private int myDir = 0;
 	

@@ -11,7 +11,6 @@
  * Fall 2016
  */
 
-<<<<<<< HEAD
 package assignment4;
 /* Critter5 represents a Rabbit
  * Reproduces as long as it has the energy too
@@ -21,15 +20,6 @@ package assignment4;
 
 /*Class name Critter5 */
 public class Critter5 extends Critter {
-=======
-/**
- * Bunny rabbit
- */
-
-public class Critter5 extends Critter {
-	@Override
-	public String toString() { return "5"; }
->>>>>>> f7fe3fc5e17f57cbc18a821950f06b5bd815f87b
 	
 	
 	/*Critter5 is represented as a 

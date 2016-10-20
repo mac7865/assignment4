@@ -11,7 +11,6 @@
  * Fall 2016
  */
 
-<<<<<<< HEAD
 package assignment4;
 /*Critter6 represents a
  * Monster which only fights
@@ -24,13 +23,6 @@ public class Critter6 extends Critter {
 	
 	/*Critter6 is represented as a 
 	 * 6 on the print screen */
-=======
-/**
- * MONSTER THAT JUST FIGHTS 
- * Moves in cirles 
- */
-public class Critter6 extends Critter {
->>>>>>> f7fe3fc5e17f57cbc18a821950f06b5bd815f87b
 	@Override
 	public String toString() { return "6"; }
 	

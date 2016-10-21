@@ -81,22 +81,7 @@ public class Critter4 extends Critter.TestCritter {
 	}
 
 	public static void runStats(java.util.List<Critter> MyCritter4s) {
-		int total_straight = 0;
-		int total_left = 0;
-		int total_right = 0;
-		int total_back = 0;
-		for (Object obj : MyCritter4s) {
-			Critter4 c = (Critter4) obj;
-			total_straight += c.genes4[0];
-			total_right += c.genes4[1] + c.genes4[2] + c.genes4[3];
-			total_back += c.genes4[4];
-			total_left += c.genes4[5] + c.genes4[6] + c.genes4[7];
-		}
 		System.out.print("" + MyCritter4s.size() + " total MyCritter4s    ");
-		System.out.print("" + total_straight / (GENE_TOTAL * 0.01 * MyCritter4s.size()) + "% straight   ");
-		System.out.print("" + total_back / (GENE_TOTAL * 0.01 * MyCritter4s.size()) + "% back   ");
-		System.out.print("" + total_right / (GENE_TOTAL * 0.01 * MyCritter4s.size()) + "% right   ");
-		System.out.print("" + total_left / (GENE_TOTAL * 0.01 * MyCritter4s.size()) + "% left   ");
 		System.out.println();
 	}
 }

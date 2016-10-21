@@ -37,7 +37,9 @@ public class Critter4 extends Critter {
 		return 3;
 	}
 	
-	
+	/**
+	 * This critter fights if it has enough energy and if it thinks it is stronger than its opponent
+     */
 	public boolean fight(String opponent) {
 		if (getEnergy() > 10 && getValue("THIS CRITTER IDENTITY") > getValue(opponent) ) 
 			return true;
@@ -47,6 +49,11 @@ public class Critter4 extends Critter {
 }
 
 	@Override
+	/**
+	 * Critter tries to reproduce as much as possible
+	 * Changes directions after certain number of turns
+	 * Walks in its direction once per step
+     */
 	public void doTimeStep() {
 		/* take one step forward */
 		walk(dir);

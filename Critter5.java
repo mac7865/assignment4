@@ -12,8 +12,11 @@ package assignment4;
  * Fall 2016
  */
 
-//Bunny rabbit
-public class Critter5 extends Critter.TestCritter {
+/**
+ * Bunny rabbit
+ */
+
+public class Critter5 extends Critter {
 	@Override
 	public String toString() { return "5"; }
 	

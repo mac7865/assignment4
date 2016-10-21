@@ -12,9 +12,11 @@ package assignment4;
  * Fall 2016
  */
 
-// MONSTER THAT JUST FIGHTS 
-//Moves in cirles 
-public class Critter6 extends Critter.TestCritter {
+/**
+ * MONSTER THAT JUST FIGHTS 
+ * Moves in cirles 
+ */
+public class Critter6 extends Critter {
 	@Override
 	public String toString() { return "6"; }
 

@@ -28,8 +28,11 @@ public class Critter6 extends Critter {
 		pos=0;
 	}
 	
+	/**
+	 * Fights algae or if it has a lot of energy
+	 */
 	public boolean fight(String opponent) {
-		if (getEnergy() > 0 ) 
+		if (getEnergy() > Params.min_reproduce_energy || opponent.equals("@") ) 
 			return true;
 		
 		return false;
@@ -37,6 +40,9 @@ public class Critter6 extends Critter {
 }
 
 	@Override
+	/**
+	 * Take step in direction, update timer to change direction
+	 */
 	public void doTimeStep() {
 		/* take one step forward */
 		walk(dir);

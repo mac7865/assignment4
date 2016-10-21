@@ -23,9 +23,12 @@ public class Critter5 extends Critter {
 	private int lastDir = 0;
 	
 	@Override
+	/**
+	 * Critter walks in a clockwise spiral over time
+	 */
 	public void doTimeStep() {
 		// TODO Auto-generated method stub
-		int direction = (lastDir + 1) % 8;
+		int direction = (lastDir - 1) % 8;
 		walk(direction);
 		lastDir = direction;
 		//Critter will run when possible in a swirling motion
@@ -37,7 +40,9 @@ public class Critter5 extends Critter {
 		}
 	}
 	
-	
+	/**
+	 * BUNNY RABBIT ALWAYS LOOKING FOR A FIGHT
+	 */
 	public boolean fight(String opponent) {
 		return true;
 	 		
